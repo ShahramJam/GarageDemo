@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Garage1App/Garage1App.csproj" />
+  <Project Path="Garage1AppTests/Garage1AppTests.csproj" Id="ef67638e-4503-4151-bbfb-7120a38bcd41" />
+</Solution>
