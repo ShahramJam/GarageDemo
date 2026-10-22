@@ -44,17 +44,18 @@ public sealed class Garage
     {
         get
         {
-            List<Vehicle> vehicles = new List<Vehicle>();
+            Vehicle[] vehicles = new Vehicle[Count];
+            int index = 0;
 
             foreach (Vehicle? vehicle in _vehicles)
             {
                 if (vehicle is not null)
                 {
-                    vehicles.Add(vehicle);
+                    vehicles[index++] = vehicle;
                 }
             }
 
-            return vehicles.ToArray();
+            return vehicles;
         }
     }
 

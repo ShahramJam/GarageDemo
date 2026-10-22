@@ -139,32 +139,43 @@ public sealed class AppManager : IAppManager
 
     private static Vehicle CreateVehicle()
     {
-        Console.WriteLine("Välj fordonstyp:");
-        Console.WriteLine("1. Motorcykel");
-        Console.WriteLine("2. Flygplan");
-        Console.WriteLine("3. Bil");
-        Console.WriteLine("4. Buss");
-        Console.WriteLine("5. Båt");
-
-        int choice = ReadInt("Typ: ", 1, 5);
-        string registrationNumber = ReadRequiredString("Registreringsnummer: ");
-        string color = ReadRequiredString("Färg: ");
-        int wheels = ReadInt("Antal hjul: ", 0, int.MaxValue);
-
-        return choice switch
+        while (true)
         {
-            1 => new Motorcycle(registrationNumber, color, wheels,
-                ReadInt("Cylindervolym (cc): ", 1, int.MaxValue)),
-            2 => new Airplane(registrationNumber, color, wheels,
-                ReadInt("Antal motorer: ", 1, int.MaxValue)),
-            3 => new Car(registrationNumber, color, wheels,
-                ReadRequiredString("Bränsletyp: ")),
-            4 => new Bus(registrationNumber, color, wheels,
-                ReadInt("Antal sittplatser: ", 1, int.MaxValue)),
-            5 => new Boat(registrationNumber, color, wheels,
-                ReadDouble("Längd i meter: ", 0.1, double.MaxValue)),
-            _ => throw new InvalidOperationException("Ogiltig fordonstyp.")
-        };
+            try
+            {
+                Console.WriteLine("Välj fordonstyp:");
+                Console.WriteLine("1. Motorcykel");
+                Console.WriteLine("2. Flygplan");
+                Console.WriteLine("3. Bil");
+                Console.WriteLine("4. Buss");
+                Console.WriteLine("5. Båt");
+
+                int choice = ReadInt("Typ: ", 1, 5);
+                string registrationNumber = ReadRequiredString("Registreringsnummer: ");
+                string color = ReadRequiredString("Färg: ");
+                int wheels = ReadInt("Antal hjul: ", 0, int.MaxValue);
+
+                return choice switch
+                {
+                    1 => new Motorcycle(registrationNumber, color, wheels,
+                        ReadInt("Cylindervolym (cc): ", 1, int.MaxValue)),
+                    2 => new Airplane(registrationNumber, color, wheels,
+                        ReadInt("Antal motorer: ", 1, int.MaxValue)),
+                    3 => new Car(registrationNumber, color, wheels,
+                        ReadRequiredString("Bränsletyp: ")),
+                    4 => new Bus(registrationNumber, color, wheels,
+                        ReadInt("Antal sittplatser: ", 1, int.MaxValue)),
+                    5 => new Boat(registrationNumber, color, wheels,
+                        ReadDouble("Längd i meter: ", 0.1, double.MaxValue)),
+                    _ => throw new InvalidOperationException("Ogiltig fordonstyp.")
+                };
+            }
+            catch (ArgumentException exception)
+            {
+                Console.WriteLine($"Kunde inte skapa fordonet: {exception.Message}");
+                Console.WriteLine("Försök igen.");
+            }
+        }
     }
 
     private void ListVehicles()
